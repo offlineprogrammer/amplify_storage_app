@@ -8,7 +8,6 @@
 .buildlog/
 .history
 .svn/
-migrate_working_dir/
 
 # IntelliJ related
 *.iml
@@ -46,6 +45,9 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+
+amplify/team-provider-info.json
+
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
 amplify/.config/local-*
@@ -65,4 +67,5 @@ amplify-gradle-config.json
 amplifytools.xcconfig
 .secret-*
 **.sample
+!amplify/backend/auth/*/build
 #amplify-do-not-edit-end

@@ -89,6 +89,8 @@ PODS:
     - DKImagePickerController/PhotoGallery
     - Flutter
   - Flutter (1.0.0)
+  - image_picker_ios (0.0.1):
+    - Flutter
   - ObjectMapper (4.2.0)
   - SDWebImage (5.12.5):
     - SDWebImage/Core (= 5.12.5)
@@ -104,6 +106,7 @@ DEPENDENCIES:
   - amplify_storage_s3_ios (from `.symlinks/plugins/amplify_storage_s3_ios/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - Flutter (from `Flutter`)
+  - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
 
 SPEC REPOS:
   trunk:
@@ -137,6 +140,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/file_picker/ios"
   Flutter:
     :path: Flutter
+  image_picker_ios:
+    :path: ".symlinks/plugins/image_picker_ios/ios"
 
 SPEC CHECKSUMS:
   Amplify: 010d6a71db20812d9e3062db1fe827393d01e584
@@ -156,6 +161,7 @@ SPEC CHECKSUMS:
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
   file_picker: 817ab1d8cd2da9d2da412a417162deee3500fc95
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  image_picker_ios: b786a5dcf033a8336a657191401bfdf12017dabb
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
   SDWebImage: 0905f1b7760fc8ac4198cae0036600d67478751e
   SwiftFormat: b70e3c776a74c67ce8bd140425a8c86d4a843759
