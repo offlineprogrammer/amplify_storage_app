@@ -5,6 +5,8 @@ import '../main.dart';
 import 'dart:io';
 
 class StorageService {
+  ValueNotifier<double> uploadProgress = ValueNotifier<double>(0);
+
   Future<List<Map<String, String>>?> getStorageItems() async {
     List<Map<String, String>> files = [];
 
@@ -40,14 +42,18 @@ class StorageService {
           local: file,
           key: DateTime.now().toString(),
           onProgress: (progress) {
+            uploadProgress.value = progress.getFractionCompleted();
+
             print("Fraction completed: " +
-                progress.getFractionCompleted().toString());
+                (progress.getFractionCompleted() * 100).toInt().toString());
           });
       print('Successfully uploaded file: ${result.key}');
     } on Exception catch (e) {
       _showError(e);
     }
   }
+
+  void updateProgress(double fractionCompleted) {}
 
   void _showError(Exception e) {
     scaffoldMessengerKey.currentState?.showSnackBar(SnackBar(

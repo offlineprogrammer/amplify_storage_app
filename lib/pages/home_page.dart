@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import '../services/storage_service.dart';
+import '../widgets/storage_item_tile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -43,7 +44,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future<void> uploadImage() async {
+  Future<void> uploadImage(BuildContext context) async {
     // Select image from user's gallery
     final XFile? pickedFile =
         await picker.pickImage(source: ImageSource.gallery);
@@ -54,8 +55,55 @@ class _HomePageState extends State<HomePage> {
     }
 
     final file = File(pickedFile.path);
+    showDialog<String>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return Dialog(
+            // The background color
+            backgroundColor: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: ValueListenableBuilder(
+                valueListenable: _storageService.uploadProgress,
+                builder: (context, value, child) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CircularProgressIndicator(),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                          '${(double.parse(value.toString()) * 100).toInt()} %'),
+                      Container(
+                          alignment: Alignment.topCenter,
+                          margin: EdgeInsets.all(20),
+                          child: LinearProgressIndicator(
+                            value: double.parse(value.toString()),
+                            backgroundColor: Colors.grey,
+                            color: Colors.purple,
+                            minHeight: 10,
+                          )),
+                    ],
+                  );
+                },
+              ),
+            ),
+          );
+
+          // new Row(
+          //   mainAxisSize: MainAxisSize.min,
+          //   children: [
+          //     new CircularProgressIndicator(),
+          //     new Text("Loading"),
+          //   ],
+        } // ),
+
+        );
     await _storageService.uploadFile(file);
     await _getLatestStorageItems();
+    Navigator.of(context, rootNavigator: true).pop();
   }
 
   @override
@@ -65,49 +113,27 @@ class _HomePageState extends State<HomePage> {
         title: Text(widget.title),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: uploadImage,
+        onPressed: () {
+          uploadImage(context);
+          //_fetchData(context);
+        },
         child: const Icon(Icons.add),
       ),
-      body: Container(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Flexible(
+      body: Column(
+        children: [
+          Expanded(
             child: GridView.builder(
-              shrinkWrap: true,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 5,
               ),
               itemCount: _storageItems.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Card(
-                    elevation: 4.0,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 200.0,
-                          child: Image(
-                            image: NetworkImage(_storageItems[index]['url']!),
-                            height: double.infinity,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        ButtonBar(
-                          children: [
-                            TextButton(
-                              child: const Text('CONTACT AGENT'),
-                              onPressed: () {/* ... */},
-                            ),
-                          ],
-                        )
-                      ],
-                    ));
-              },
+              itemBuilder: (context, index) =>
+                  StorageItemTile(_storageItems[index]),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
