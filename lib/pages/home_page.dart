@@ -1,4 +1,3 @@
-import 'package:amplify_storage_s3/amplify_storage_s3.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -70,15 +69,15 @@ class _HomePageState extends State<HomePage> {
                   return Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      CircularProgressIndicator(),
-                      SizedBox(
+                      const CircularProgressIndicator(),
+                      const SizedBox(
                         height: 15,
                       ),
                       Text(
                           '${(double.parse(value.toString()) * 100).toInt()} %'),
                       Container(
                           alignment: Alignment.topCenter,
-                          margin: EdgeInsets.all(20),
+                          margin: const EdgeInsets.all(20),
                           child: LinearProgressIndicator(
                             value: double.parse(value.toString()),
                             backgroundColor: Colors.grey,
@@ -91,16 +90,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           );
-
-          // new Row(
-          //   mainAxisSize: MainAxisSize.min,
-          //   children: [
-          //     new CircularProgressIndicator(),
-          //     new Text("Loading"),
-          //   ],
-        } // ),
-
-        );
+        });
     await _storageService.uploadFile(file);
     await _getLatestStorageItems();
     Navigator.of(context, rootNavigator: true).pop();

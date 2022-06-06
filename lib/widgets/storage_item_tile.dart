@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class StorageItemTile extends StatelessWidget {
@@ -13,13 +14,14 @@ class StorageItemTile extends StatelessWidget {
         elevation: 4.0,
         child: Column(children: [
           Expanded(
-            child: Image(
-              image: NetworkImage(storageItem['url']!),
-              fit: BoxFit.cover,
+            child: CachedNetworkImage(
+              imageUrl: storageItem['url']!,
               height: double.infinity,
               width: double.infinity,
+              fit: BoxFit.cover,
             ),
           ),
+
           // ButtonBar(
           //   children: [
           //     IconButton(

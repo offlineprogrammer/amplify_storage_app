@@ -12,7 +12,7 @@ class StorageService {
 
     try {
       final ListResult result = await Amplify.Storage.list();
-      final List<StorageItem> storageItems = result.items;
+      final List<StorageItem> storageItems = result.items.reversed.toList();
       await Future.forEach<StorageItem>(storageItems, (file) async {
         final String fileUrl = await getImageUrl(file.key);
 
@@ -38,22 +38,16 @@ class StorageService {
 
   Future<void> uploadFile(File file) async {
     try {
-      final UploadFileResult result = await Amplify.Storage.uploadFile(
+      await Amplify.Storage.uploadFile(
           local: file,
           key: DateTime.now().toString(),
           onProgress: (progress) {
             uploadProgress.value = progress.getFractionCompleted();
-
-            print("Fraction completed: " +
-                (progress.getFractionCompleted() * 100).toInt().toString());
           });
-      print('Successfully uploaded file: ${result.key}');
     } on Exception catch (e) {
       _showError(e);
     }
   }
-
-  void updateProgress(double fractionCompleted) {}
 
   void _showError(Exception e) {
     scaffoldMessengerKey.currentState?.showSnackBar(SnackBar(
