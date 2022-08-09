@@ -10,7 +10,7 @@
 include: package:flutter_lints/flutter.yaml
 
 analyzer:
-  strong-mode:
-    implicit-dynamic: false
+#  strong-mode:
+#    implicit-dynamic: false
   exclude:
     - lib/models/**
