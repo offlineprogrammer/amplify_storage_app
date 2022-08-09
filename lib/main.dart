@@ -1,20 +1,21 @@
+import 'package:amplify_storage_app/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_authenticator/amplify_authenticator.dart';
 import 'package:amplify_storage_s3/amplify_storage_s3.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'amplifyconfiguration.dart';
-import 'pages/home_page.dart';
 
 final scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
-void main() => runApp(const MyApp());
+void main() => runApp(const ProviderScope(child: MyApp()));
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -45,9 +46,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Widget buildApp(BuildContext context) {
-    return _amplifyConfigured
-        ? const HomePage(title: 'Amplify Storage')
-        : _waitForAmplify();
+    return _amplifyConfigured ? const HomePage() : _waitForAmplify();
   }
 
   @override

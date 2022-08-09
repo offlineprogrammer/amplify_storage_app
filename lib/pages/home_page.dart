@@ -1,55 +1,24 @@
-import 'package:flutter/material.dart';
 import 'dart:io';
+
+import 'package:amplify_storage_app/services/storage_service.dart';
+import 'package:amplify_storage_app/widgets/storage_item_tile.dart';
+import 'package:amplify_storage_app/widgets/upload_progress_dialog.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import '../services/storage_service.dart';
-import '../widgets/storage_item_tile.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerWidget {
   const HomePage({
-    Key? key,
-    required this.title,
-  }) : super(key: key);
+    super.key,
+  });
 
-  final String title;
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  final StorageService _storageService = StorageService();
-  List<Map<String, String>> _storageItems = const [];
-  final picker = ImagePicker();
-
-  @override
-  void initState() {
-    super.initState();
-    _getLatestStorageItems();
-  }
-
-  Future<void> _getLatestStorageItems() async {
-    try {
-      final storageItems = await _storageService.getStorageItems();
-      setState(() {
-        _storageItems = storageItems!;
-
-        print(storageItems);
-      });
-    } on Exception catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: Colors.red,
-        content: Text(e.toString()),
-      ));
-    }
-  }
-
-  Future<void> uploadImage(BuildContext context) async {
-    // Select image from user's gallery
-    final XFile? pickedFile =
-        await picker.pickImage(source: ImageSource.gallery);
-
+  Future<void> uploadImage({
+    required BuildContext context,
+    required WidgetRef ref,
+  }) async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile == null) {
-      print('No image selected');
       return;
     }
 
@@ -58,73 +27,60 @@ class _HomePageState extends State<HomePage> {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
-          return Dialog(
-            // The background color
-            backgroundColor: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: ValueListenableBuilder(
-                valueListenable: _storageService.uploadProgress,
-                builder: (context, value, child) {
-                  return Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const CircularProgressIndicator(),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                          '${(double.parse(value.toString()) * 100).toInt()} %'),
-                      Container(
-                          alignment: Alignment.topCenter,
-                          margin: const EdgeInsets.all(20),
-                          child: LinearProgressIndicator(
-                            value: double.parse(value.toString()),
-                            backgroundColor: Colors.grey,
-                            color: Colors.purple,
-                            minHeight: 10,
-                          )),
-                    ],
-                  );
-                },
-              ),
-            ),
-          );
+          return const UploadProgressDialog();
         });
-    await _storageService.uploadFile(file);
-    await _getLatestStorageItems();
-    Navigator.of(context, rootNavigator: true).pop();
+    await ref.read(storageServiceProvider).uploadFile(file);
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final storageItems = ref.watch(storageItemsListFutureProvider);
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          uploadImage(context);
-          //_fetchData(context);
-        },
-        child: const Icon(Icons.add),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 5,
-              ),
-              itemCount: _storageItems.length,
-              itemBuilder: (context, index) =>
-                  StorageItemTile(_storageItems[index]),
-            ),
-          ),
-        ],
-      ),
-    );
+        appBar: AppBar(
+          title: const Text('Amplify Storage'),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            uploadImage(
+              context: context,
+              ref: ref,
+            ).then((value) {
+              ref.refresh(storageItemsListFutureProvider);
+              Navigator.of(context).pop();
+            });
+            //_fetchData(context);
+          },
+          child: const Icon(Icons.add),
+        ),
+        body: storageItems.when(
+            data: (items) => items!.isEmpty
+                ? const Center(
+                    child: Text('No Items'),
+                  )
+                : Column(
+                    children: [
+                      Expanded(
+                        child: GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 5,
+                          ),
+                          itemCount: items.length,
+                          itemBuilder: (context, index) => StorageItemTile(
+                            storageItem: items[index],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+            error: (e, st) => const Center(
+                  child: Text('Error'),
+                ),
+            loading: () => const Center(
+                  child: CircularProgressIndicator(),
+                )));
   }
 }
