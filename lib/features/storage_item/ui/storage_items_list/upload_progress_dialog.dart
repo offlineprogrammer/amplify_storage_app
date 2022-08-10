@@ -1,4 +1,5 @@
-import 'package:amplify_storage_app/services/storage_service.dart';
+import 'package:amplify_storage_app/features/storage_item/controller/storage_items_controller.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,7 +14,8 @@ class UploadProgressDialog extends ConsumerWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20),
         child: ValueListenableBuilder(
-          valueListenable: ref.read(storageServiceProvider).uploadProgress,
+          valueListenable:
+              ref.read(storageItemsControllerProvider).uploadProgress(),
           builder: (context, value, child) {
             return Column(
               mainAxisSize: MainAxisSize.min,

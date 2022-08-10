@@ -1,14 +1,15 @@
 import 'dart:io';
 
-import 'package:amplify_storage_app/services/storage_service.dart';
-import 'package:amplify_storage_app/widgets/storage_item_tile.dart';
-import 'package:amplify_storage_app/widgets/upload_progress_dialog.dart';
+import 'package:amplify_storage_app/features/storage_item/controller/storage_items_controller.dart';
+import 'package:amplify_storage_app/features/storage_item/services/storage_service.dart';
+import 'package:amplify_storage_app/features/storage_item/ui/storage_items_list/storage_item_tile.dart';
+import 'package:amplify_storage_app/features/storage_item/ui/storage_items_list/upload_progress_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
-class HomePage extends ConsumerWidget {
-  const HomePage({
+class StorageItemsListPage extends ConsumerWidget {
+  const StorageItemsListPage({
     super.key,
   });
 
@@ -47,7 +48,8 @@ class HomePage extends ConsumerWidget {
               ref: ref,
             ).then((value) {
               ref.refresh(storageItemsListFutureProvider);
-              Navigator.of(context).pop();
+
+              Navigator.of(context, rootNavigator: true).pop();
             });
             //_fetchData(context);
           },
@@ -62,6 +64,7 @@ class HomePage extends ConsumerWidget {
                     children: [
                       Expanded(
                         child: GridView.builder(
+                          key: const Key('StorageItemsGridView'),
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,

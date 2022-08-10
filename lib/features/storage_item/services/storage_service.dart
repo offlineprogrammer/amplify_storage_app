@@ -20,8 +20,8 @@ class StorageService {
         final String fileUrl = await getImageUrl(file.key);
 
         storageItemsList.add({
-          "key": file.key,
-          "url": fileUrl,
+          'key': file.key,
+          'url': fileUrl,
         });
       });
       return storageItemsList;
@@ -70,10 +70,4 @@ class StorageService {
 
 final storageServiceProvider = Provider<StorageService>((ref) {
   return StorageService();
-});
-
-final storageItemsListFutureProvider =
-    FutureProvider<List<Map<String, String>>?>((ref) {
-  final storageService = ref.watch(storageServiceProvider);
-  return storageService.getStorageItems();
 });
