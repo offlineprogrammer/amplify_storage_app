@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:amplify_storage_app/features/storage_item/models/storage_file.dart';
 import 'package:amplify_storage_app/features/storage_item/services/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,8 +9,7 @@ final storageItemsControllerProvider = Provider<StorageItemsController>((ref) {
   return StorageItemsController(ref);
 });
 
-final storageItemsListFutureProvider =
-    FutureProvider<List<Map<String, String>>?>((ref) {
+final storageItemsListFutureProvider = FutureProvider<List<StorageFile>>((ref) {
   final storageItemsController = ref.watch(storageItemsControllerProvider);
   return storageItemsController.getStorageItems();
 });
@@ -30,8 +30,8 @@ class StorageItemsController {
     return ref.read(storageServiceProvider).getUploadProgress();
   }
 
-  Future<List<Map<String, String>>?> getStorageItems() async {
-    List<Map<String, String>>? storageItemsList = [];
+  Future<List<StorageFile>> getStorageItems() async {
+    List<StorageFile> storageItemsList = [];
 
     storageItemsList = await ref.read(storageServiceProvider).getStorageItems();
 

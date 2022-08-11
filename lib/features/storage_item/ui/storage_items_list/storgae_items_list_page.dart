@@ -73,7 +73,7 @@ class StorageItemsListPage extends ConsumerWidget {
                           ),
                           itemCount: items.length,
                           itemBuilder: (context, index) => StorageItemTile(
-                            storageItem: items[index],
+                            storageFile: items[index],
                           ),
                         ),
                       ),

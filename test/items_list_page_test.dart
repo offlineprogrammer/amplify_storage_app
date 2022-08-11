@@ -1,4 +1,5 @@
 import 'package:amplify_storage_app/features/storage_item/controller/storage_items_controller.dart';
+import 'package:amplify_storage_app/features/storage_item/models/storage_file.dart';
 
 import 'package:amplify_storage_app/features/storage_item/ui/storage_items_list/storgae_items_list_page.dart';
 import 'package:flutter/material.dart';
@@ -49,12 +50,7 @@ void main() {
       ProviderScope(
         overrides: [
           storageItemsListFutureProvider.overrideWithValue(
-            const AsyncValue.data([
-              {
-                'key': 'key1',
-                'url': 'url1',
-              }
-            ]),
+            const AsyncValue.data([StorageFile(key: 'key1', url: 'url1')]),
           ),
         ],
         child: const MaterialApp(

@@ -1,3 +1,4 @@
+import 'package:amplify_storage_app/features/storage_item/models/storage_file.dart';
 import 'package:amplify_storage_s3/amplify_storage_s3.dart';
 import 'package:flutter/material.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
@@ -10,8 +11,8 @@ import 'package:path/path.dart' as p;
 class StorageService {
   ValueNotifier<double> uploadProgress = ValueNotifier<double>(0);
 
-  Future<List<Map<String, String>>?> getStorageItems() async {
-    List<Map<String, String>> storageItemsList = [];
+  Future<List<StorageFile>> getStorageItems() async {
+    List<StorageFile> storageItemsList = ([]);
 
     try {
       final ListResult result = await Amplify.Storage.list();
@@ -19,15 +20,12 @@ class StorageService {
       await Future.forEach<StorageItem>(storageItems, (file) async {
         final String fileUrl = await getImageUrl(file.key);
 
-        storageItemsList.add({
-          'key': file.key,
-          'url': fileUrl,
-        });
+        storageItemsList.add(StorageFile(key: file.key, url: fileUrl));
       });
       return storageItemsList;
     } on Exception catch (e) {
       debugPrint(e.toString());
-      return null;
+      return storageItemsList;
     }
   }
 

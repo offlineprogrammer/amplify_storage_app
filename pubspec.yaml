@@ -24,14 +24,16 @@ dependencies:
   cached_network_image: ^3.2.1
   uuid: ^3.0.4
   path: ^1.8.1
+  freezed_annotation: ^2.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   mocktail: ^0.3.0
-
-  
   flutter_lints: ^2.0.1
+  build_runner: ^2.2.0
+  freezed: ^2.1.0+1
+  json_serializable: ^6.3.1
 
 flutter:
 
