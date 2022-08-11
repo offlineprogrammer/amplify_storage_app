@@ -1,4 +1,4 @@
-# Amplify Flutter Storage Gallery app
+# Amplify Flutter Storage Gallery App
 
 This is a sample app that provides a quickstart for developers that want to build an App using the Amplify Flutter library for Storgae and Riverpod.
 
