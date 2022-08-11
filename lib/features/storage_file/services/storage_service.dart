@@ -20,12 +20,18 @@ class StorageService {
 
     try {
       final ListResult result = await Amplify.Storage.list();
-      final List<StorageItem> storageItems = result.items.reversed.toList();
-      await Future.forEach<StorageItem>(storageItems, (file) async {
-        final String fileUrl = await getImageUrl(file.key);
+      final List<StorageItem> storageItems = result.items;
 
-        storageItemsList.add(StorageFile(key: file.key, url: fileUrl));
-      });
+      if (storageItems.isNotEmpty) {
+        storageItems.sort((a, b) => b.lastModified!.compareTo(a.lastModified!));
+
+        await Future.forEach<StorageItem>(storageItems, (file) async {
+          final String fileUrl = await getImageUrl(file.key);
+
+          storageItemsList.add(StorageFile(key: file.key, url: fileUrl));
+        });
+      }
+
       return storageItemsList;
     } on Exception catch (e) {
       debugPrint(e.toString());
