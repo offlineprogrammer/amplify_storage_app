@@ -1,4 +1,4 @@
-import 'package:amplify_storage_app/features/storage_item/ui/storage_items_list/storgae_items_list_page.dart';
+import 'package:amplify_storage_app/features/storage_file/ui/storage_files_list/storgae_files_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
 
   Widget buildApp(BuildContext context) {
     return _amplifyConfigured
-        ? const StorageItemsListPage()
+        ? const StorageFilesListPage()
         : _waitForAmplify();
   }
 

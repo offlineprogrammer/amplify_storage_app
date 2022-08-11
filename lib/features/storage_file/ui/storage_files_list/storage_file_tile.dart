@@ -1,9 +1,9 @@
-import 'package:amplify_storage_app/features/storage_item/models/storage_file.dart';
+import 'package:amplify_storage_app/features/storage_file/models/storage_file.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class StorageItemTile extends StatelessWidget {
-  const StorageItemTile({
+class StorageFileTile extends StatelessWidget {
+  const StorageFileTile({
     required this.storageFile,
     super.key,
   });

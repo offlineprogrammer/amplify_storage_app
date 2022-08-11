@@ -1,15 +1,15 @@
 import 'dart:io';
 
-import 'package:amplify_storage_app/features/storage_item/controller/storage_items_controller.dart';
-import 'package:amplify_storage_app/features/storage_item/services/storage_service.dart';
-import 'package:amplify_storage_app/features/storage_item/ui/storage_items_list/storage_item_tile.dart';
-import 'package:amplify_storage_app/features/storage_item/ui/storage_items_list/upload_progress_dialog.dart';
+import 'package:amplify_storage_app/features/storage_file/controller/storage_files_controller.dart';
+import 'package:amplify_storage_app/features/storage_file/services/storage_service.dart';
+import 'package:amplify_storage_app/features/storage_file/ui/storage_files_list/storage_file_tile.dart';
+import 'package:amplify_storage_app/features/storage_file/ui/storage_files_list/upload_progress_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
-class StorageItemsListPage extends ConsumerWidget {
-  const StorageItemsListPage({
+class StorageFilesListPage extends ConsumerWidget {
+  const StorageFilesListPage({
     super.key,
   });
 
@@ -35,7 +35,7 @@ class StorageItemsListPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final storageItems = ref.watch(storageItemsListFutureProvider);
+    final storageItems = ref.watch(storageFilesListFutureProvider);
 
     return Scaffold(
         appBar: AppBar(
@@ -47,7 +47,7 @@ class StorageItemsListPage extends ConsumerWidget {
               context: context,
               ref: ref,
             ).then((value) {
-              ref.refresh(storageItemsListFutureProvider);
+              ref.refresh(storageFilesListFutureProvider);
 
               Navigator.of(context, rootNavigator: true).pop();
             });
@@ -56,7 +56,7 @@ class StorageItemsListPage extends ConsumerWidget {
           child: const Icon(Icons.add),
         ),
         body: storageItems.when(
-            data: (items) => items!.isEmpty
+            data: (items) => items.isEmpty
                 ? const Center(
                     child: Text('No Items'),
                   )
@@ -72,7 +72,7 @@ class StorageItemsListPage extends ConsumerWidget {
                             crossAxisSpacing: 5,
                           ),
                           itemCount: items.length,
-                          itemBuilder: (context, index) => StorageItemTile(
+                          itemBuilder: (context, index) => StorageFileTile(
                             storageFile: items[index],
                           ),
                         ),

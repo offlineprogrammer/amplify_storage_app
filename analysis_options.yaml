@@ -14,3 +14,5 @@ analyzer:
 #    implicit-dynamic: false
   exclude:
     - lib/models/**
+    - '**/*.g.dart'
+    - '**/*.freezed.dart'

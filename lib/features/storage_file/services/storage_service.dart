@@ -1,4 +1,4 @@
-import 'package:amplify_storage_app/features/storage_item/models/storage_file.dart';
+import 'package:amplify_storage_app/features/storage_file/models/storage_file.dart';
 import 'package:amplify_storage_s3/amplify_storage_s3.dart';
 import 'package:flutter/material.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
@@ -8,10 +8,14 @@ import 'dart:io';
 import 'package:uuid/uuid.dart';
 import 'package:path/path.dart' as p;
 
+final storageServiceProvider = Provider<StorageService>((ref) {
+  return StorageService();
+});
+
 class StorageService {
   ValueNotifier<double> uploadProgress = ValueNotifier<double>(0);
 
-  Future<List<StorageFile>> getStorageItems() async {
+  Future<List<StorageFile>> getStorageFiles() async {
     List<StorageFile> storageItemsList = ([]);
 
     try {
@@ -52,8 +56,6 @@ class StorageService {
             uploadProgress.value = progress.getFractionCompleted();
           });
 
-      // getStorageItems();
-
       return key;
     } on Exception catch (e) {
       debugPrint(e.toString());
@@ -65,7 +67,3 @@ class StorageService {
     uploadProgress.value = 0;
   }
 }
-
-final storageServiceProvider = Provider<StorageService>((ref) {
-  return StorageService();
-});
