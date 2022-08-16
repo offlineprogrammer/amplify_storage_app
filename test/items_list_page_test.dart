@@ -1,6 +1,6 @@
 import 'package:amplify_storage_app/features/storage_file/controller/storage_files_controller.dart';
 import 'package:amplify_storage_app/features/storage_file/models/storage_file.dart';
-import 'package:amplify_storage_app/features/storage_file/ui/storage_files_list/storgae_files_list_page.dart';
+import 'package:amplify_storage_app/features/storage_file/ui/storage_files_list/storage_files_list_page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

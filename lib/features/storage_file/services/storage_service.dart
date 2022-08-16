@@ -1,7 +1,8 @@
 import 'package:amplify_storage_app/features/storage_file/models/storage_file.dart';
+import 'package:amplify_storage_app/utils.dart';
 import 'package:amplify_storage_s3/amplify_storage_s3.dart';
-import 'package:flutter/material.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:flutter/foundation.dart' show ValueNotifier;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'dart:io';
@@ -16,7 +17,7 @@ class StorageService {
   ValueNotifier<double> uploadProgress = ValueNotifier<double>(0);
 
   Future<List<StorageFile>> getStorageFiles() async {
-    List<StorageFile> storageItemsList = ([]);
+    List<StorageFile> storageItemsList = [];
 
     try {
       final ListResult result = await Amplify.Storage.list();
@@ -31,12 +32,10 @@ class StorageService {
           storageItemsList.add(StorageFile(key: file.key, url: fileUrl));
         });
       }
-
-      return storageItemsList;
     } on Exception catch (e) {
-      debugPrint(e.toString());
-      return storageItemsList;
+      logger.e(e);
     }
+    return storageItemsList;
   }
 
   Future<String> getImageUrl(String key) async {
@@ -47,24 +46,23 @@ class StorageService {
     return result.url;
   }
 
-  ValueNotifier<double> getUploadProgress() {
-    return uploadProgress;
-  }
+  ValueNotifier<double> getUploadProgress() => uploadProgress;
 
   Future<String?> uploadFile(File file) async {
     try {
       final extension = p.extension(file.path);
       final key = const Uuid().v1() + extension;
       await Amplify.Storage.uploadFile(
-          local: file,
-          key: key,
-          onProgress: (progress) {
-            uploadProgress.value = progress.getFractionCompleted();
-          });
+        local: file,
+        key: key,
+        onProgress: (progress) {
+          uploadProgress.value = progress.getFractionCompleted() * 100;
+        },
+      );
 
       return key;
     } on Exception catch (e) {
-      debugPrint(e.toString());
+      logger.e(e);
       return null;
     }
   }
