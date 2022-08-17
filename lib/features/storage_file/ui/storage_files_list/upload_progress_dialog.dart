@@ -8,7 +8,6 @@ class UploadProgressDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Dialog(
-      // The background color
       backgroundColor: Colors.white,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20),
@@ -20,19 +19,18 @@ class UploadProgressDialog extends ConsumerWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const CircularProgressIndicator(),
-                const SizedBox(
-                  height: 15,
-                ),
-                Text('${(double.parse(value.toString()) * 100).toInt()} %'),
+                const SizedBox(height: 15),
+                Text('$value %'),
                 Container(
-                    alignment: Alignment.topCenter,
-                    margin: const EdgeInsets.all(20),
-                    child: LinearProgressIndicator(
-                      value: double.parse(value.toString()),
-                      backgroundColor: Colors.grey,
-                      color: Colors.purple,
-                      minHeight: 10,
-                    )),
+                  alignment: Alignment.topCenter,
+                  margin: const EdgeInsets.all(20),
+                  child: LinearProgressIndicator(
+                    value: double.parse(value.toString()),
+                    backgroundColor: Colors.grey,
+                    color: Colors.purple,
+                    minHeight: 10,
+                  ),
+                ),
               ],
             );
           },

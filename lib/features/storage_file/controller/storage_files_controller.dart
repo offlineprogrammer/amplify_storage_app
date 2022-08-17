@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final storageFilesControllerProvider = Provider<StorageFilesController>((ref) {
-  return StorageFilesController(ref);
+  return StorageFilesController(ref: ref);
 });
 
 final storageFilesListFutureProvider = FutureProvider<List<StorageFile>>((ref) {
@@ -15,26 +15,20 @@ final storageFilesListFutureProvider = FutureProvider<List<StorageFile>>((ref) {
 });
 
 class StorageFilesController {
-  final Ref ref;
+  StorageFilesController({
+    required Ref ref,
+  }) : service = ref.read(storageServiceProvider);
 
-  StorageFilesController(this.ref);
+  final StorageService service;
 
   Future<void> uploadFile(File file) async {
-    final fileKey = await ref.read(storageServiceProvider).uploadFile(file);
+    final fileKey = await service.uploadFile(file);
     if (fileKey != null) {
-      ref.read(storageServiceProvider).resetUploadProgress();
+      service.resetUploadProgress();
     }
   }
 
-  ValueNotifier<double> uploadProgress() {
-    return ref.read(storageServiceProvider).getUploadProgress();
-  }
+  ValueNotifier<double> uploadProgress() => service.getUploadProgress();
 
-  Future<List<StorageFile>> getStorageFiles() async {
-    List<StorageFile> storageItemsList = [];
-
-    storageItemsList = await ref.read(storageServiceProvider).getStorageFiles();
-
-    return storageItemsList;
-  }
+  Future<List<StorageFile>> getStorageFiles() => service.getStorageFiles();
 }
