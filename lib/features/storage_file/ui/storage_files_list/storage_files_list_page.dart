@@ -13,14 +13,14 @@ class StorageFilesListPage extends ConsumerWidget {
     super.key,
   });
 
-  Future<void> uploadImage({
+  Future<bool> uploadImage({
     required BuildContext context,
     required WidgetRef ref,
   }) async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile == null) {
-      return;
+      return false;
     }
 
     final file = File(pickedFile.path);
@@ -31,6 +31,7 @@ class StorageFilesListPage extends ConsumerWidget {
           return const UploadProgressDialog();
         });
     await ref.read(storageServiceProvider).uploadFile(file);
+    return true;
   }
 
   @override
@@ -47,11 +48,12 @@ class StorageFilesListPage extends ConsumerWidget {
               context: context,
               ref: ref,
             ).then((value) {
-              ref.refresh(storageFilesListFutureProvider);
+              if (value) {
+                ref.refresh(storageFilesListFutureProvider);
 
-              Navigator.of(context, rootNavigator: true).pop();
+                Navigator.of(context, rootNavigator: true).pop();
+              }
             });
-            //_fetchData(context);
           },
           child: const Icon(Icons.add),
         ),
