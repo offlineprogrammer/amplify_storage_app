@@ -14,7 +14,7 @@ final storageServiceProvider = Provider<StorageService>((ref) {
 });
 
 class StorageService {
-  ValueNotifier<double> uploadProgress = ValueNotifier<double>(0);
+  ValueNotifier<int> uploadProgress = ValueNotifier<int>(0);
 
   Future<List<StorageFile>> getStorageFiles() async {
     List<StorageFile> storageItemsList = [];
@@ -46,7 +46,7 @@ class StorageService {
     return result.url;
   }
 
-  ValueNotifier<double> getUploadProgress() => uploadProgress;
+  ValueNotifier<int> getUploadProgress() => uploadProgress;
 
   Future<String?> uploadFile(File file) async {
     try {
@@ -56,7 +56,8 @@ class StorageService {
         local: file,
         key: key,
         onProgress: (progress) {
-          uploadProgress.value = progress.getFractionCompleted() * 100;
+          uploadProgress.value =
+              (progress.getFractionCompleted() * 100).toInt();
         },
       );
 

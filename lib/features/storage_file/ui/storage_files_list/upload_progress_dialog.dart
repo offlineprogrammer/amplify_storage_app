@@ -25,7 +25,7 @@ class UploadProgressDialog extends ConsumerWidget {
                   alignment: Alignment.topCenter,
                   margin: const EdgeInsets.all(20),
                   child: LinearProgressIndicator(
-                    value: double.parse(value.toString()),
+                    value: double.parse(value.toString()) / 100,
                     backgroundColor: Colors.grey,
                     color: Colors.purple,
                     minHeight: 10,

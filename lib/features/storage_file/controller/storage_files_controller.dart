@@ -28,7 +28,7 @@ class StorageFilesController {
     }
   }
 
-  ValueNotifier<double> uploadProgress() => service.getUploadProgress();
+  ValueNotifier<int> uploadProgress() => service.getUploadProgress();
 
   Future<List<StorageFile>> getStorageFiles() => service.getStorageFiles();
 }

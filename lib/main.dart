@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'amplifyconfiguration.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   bool isAmplifySuccessfullyConfigured = false;
   try {
     await _configureAmplify();
