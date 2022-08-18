@@ -13,7 +13,7 @@ This is a sample app that uses [`Amplify Storage`](https://docs.amplify.aws/lib/
 
 
 ## Getting Started
-* Install (https://docs.amplify.aws/cli/start/install/) and configure Amplify CLI
+* [`Install`](https://docs.amplify.aws/cli/start/install/) and configure Amplify CLI
 * A Flutter application targeting Flutter SDK >= 2.0.0 (stable version).
 * An iOS configuration targeting at least iOS 11.0
 * An Android configuration targeting at least Android API level 21 (Android 5.0) or above
@@ -49,7 +49,7 @@ amplify push
 
 ## App Architecture and Folder Structure
 
-The code of the app implements clean architecture to separate the app layers with a feature-first approach for folder structure. I used [`Riverpod`](https://riverpod.dev/) for state management and [Freezed](https://pub.dev/packages/freezed) for the storage file model
+The code of the app implements clean architecture to separate the app layers with a feature-first approach for folder structure. I used [`Riverpod`](https://riverpod.dev/) for state management and [`Freezed`](https://pub.dev/packages/freezed) for the storage file model
 
 
 #### Folder Structure
