@@ -5,11 +5,9 @@ This is a sample app that uses [`Amplify Storage`](https://docs.amplify.aws/lib/
 
 ## Previews
 
-<div style="display: flex">
-<img style="display: inline-block" src="https://user-images.githubusercontent.com/12375969/185500414-f46cdea9-4721-4fd4-97ee-b0239b9c3bf9.gif" />
-
-
-</div>
+<p align="center">
+  <img  src="https://user-images.githubusercontent.com/12375969/185512037-2203ea10-1649-43c3-8a64-36911ea03f7b.gif" />
+</p>
 
 
 ## Getting Started
