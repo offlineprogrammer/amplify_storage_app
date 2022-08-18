@@ -1,6 +1,6 @@
 # Amplify Flutter Storage Gallery App
 
-This is a sample app that uses [`Amplify Storage`](https://docs.amplify.aws/lib/storage/getting-started/q/platform/flutter/) to upload upload images to AWS S3
+This is a sample app that uses [`Amplify Storage`](https://docs.amplify.aws/lib/storage/getting-started/q/platform/flutter/) to upload images to AWS S3
 
 
 ## Previews
