@@ -1,4 +1,4 @@
-import 'package:amplify_storage_app/app.dart';
+import 'package:amplify_storage_app/storage_gallery_app.dart';
 import 'package:amplify_storage_app/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
@@ -19,7 +19,7 @@ Future<void> main() async {
 
   runApp(
     ProviderScope(
-      child: MyApp(
+      child: StorageGalleryApp(
         isAmplifySuccessfullyConfigured: isAmplifySuccessfullyConfigured,
       ),
     ),

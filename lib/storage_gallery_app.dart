@@ -2,8 +2,8 @@ import 'package:amplify_authenticator/amplify_authenticator.dart';
 import 'package:amplify_storage_app/features/storage_file/ui/storage_files_list/storage_files_list_page.dart';
 import 'package:flutter/material.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({
+class StorageGalleryApp extends StatelessWidget {
+  const StorageGalleryApp({
     required this.isAmplifySuccessfullyConfigured,
     Key? key,
   }) : super(key: key);
