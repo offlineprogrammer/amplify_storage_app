@@ -1,6 +1,6 @@
 # Amplify Flutter Storage Gallery App
 
-This is a sample app that used [`Amplify Storage`](https://docs.amplify.aws/lib/storage/getting-started/q/platform/flutter/) to upload upload images to AWS S3
+This is a sample app that uses [`Amplify Storage`](https://docs.amplify.aws/lib/storage/getting-started/q/platform/flutter/) to upload upload images to AWS S3
 
 
 ## Previews
@@ -75,4 +75,4 @@ lib
     * `services` is the app services layer
         *  `storage_service.dart` is the service & provider to use Amplify Storage for files listing & uploading
      * `models` is the storage_file model generated using Freezed
-     * `controller` is an abstract layer that used by the ui for the storage buisness logic
+     * `controller` is an abstract layer that used by the ui for the buisness logic
