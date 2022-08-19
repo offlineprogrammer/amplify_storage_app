@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:amplify_storage_app/features/storage_file/controller/storage_files_controller.dart';
+import 'package:amplify_storage_app/features/storage_file/models/storage_file.dart';
 import 'package:amplify_storage_app/features/storage_file/services/storage_service.dart';
+import 'package:amplify_storage_app/features/storage_file/ui/storage_files_list/delete_storage_file_dialog.dart';
 import 'package:amplify_storage_app/features/storage_file/ui/storage_files_list/storage_file_tile.dart';
 import 'package:amplify_storage_app/features/storage_file/ui/storage_files_list/upload_progress_dialog.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +34,21 @@ class StorageFilesListPage extends ConsumerWidget {
         });
     await ref.read(storageServiceProvider).uploadFile(file);
     return true;
+  }
+
+  Future<void> deletestorageFile(
+      BuildContext context, WidgetRef ref, StorageFile storageFile) async {
+    var value = await showDialog<bool>(
+        context: context,
+        builder: (BuildContext context) {
+          return const DeleteStorageFileDialog();
+        });
+    value ??= false;
+
+    if (value) {
+      await ref.read(storageServiceProvider).deleteFile(storageFile.key);
+      ref.refresh(storageFilesListFutureProvider);
+    }
   }
 
   @override
@@ -74,8 +91,15 @@ class StorageFilesListPage extends ConsumerWidget {
                             crossAxisSpacing: 5,
                           ),
                           itemCount: items.length,
-                          itemBuilder: (context, index) => StorageFileTile(
-                            storageFile: items[index],
+                          itemBuilder: (context, index) => InkWell(
+                            highlightColor: Colors.red.withOpacity(0.4),
+                            splashColor: Colors.amber.withOpacity(0.5),
+                            onLongPress: (() {
+                              deletestorageFile(context, ref, items[index]);
+                            }),
+                            child: StorageFileTile(
+                              storageFile: items[index],
+                            ),
                           ),
                         ),
                       ),

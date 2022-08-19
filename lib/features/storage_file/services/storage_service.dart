@@ -46,6 +46,14 @@ class StorageService {
     return result.url;
   }
 
+  Future<void> deleteFile(String key) async {
+    try {
+      await Amplify.Storage.remove(key: key);
+    } on Exception catch (e) {
+      logger.e(e);
+    }
+  }
+
   ValueNotifier<int> getUploadProgress() => uploadProgress;
 
   Future<String?> uploadFile(File file) async {

@@ -28,6 +28,8 @@ class StorageFilesController {
     }
   }
 
+  Future<void> deleteFile(String fileKey) => service.deleteFile(fileKey);
+
   ValueNotifier<int> uploadProgress() => service.getUploadProgress();
 
   Future<List<StorageFile>> getStorageFiles() => service.getStorageFiles();
