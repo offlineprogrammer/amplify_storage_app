@@ -1,19 +1,17 @@
 # Amplify Flutter Storage Gallery App
 
-This is a sample app that used [`Amplify Storage`](https://docs.amplify.aws/lib/storage/getting-started/q/platform/flutter/) to upload upload images to AWS S3
+This is a sample app that uses [`Amplify Storage`](https://docs.amplify.aws/lib/storage/getting-started/q/platform/flutter/) to upload images to AWS S3
 
 
 ## Previews
 
-<div style="display: flex">
-<img style="display: inline-block" src="https://user-images.githubusercontent.com/12375969/185500414-f46cdea9-4721-4fd4-97ee-b0239b9c3bf9.gif" />
-
-
-</div>
+<p align="center">
+  <img  src="https://user-images.githubusercontent.com/12375969/185515984-387669a6-3644-4842-8627-4f1a9133dede.gif" />
+</p>
 
 
 ## Getting Started
-* Install (https://docs.amplify.aws/cli/start/install/) and configure Amplify CLI
+* [`Install`](https://docs.amplify.aws/cli/start/install/) and configure Amplify CLI
 * A Flutter application targeting Flutter SDK >= 2.0.0 (stable version).
 * An iOS configuration targeting at least iOS 11.0
 * An Android configuration targeting at least Android API level 21 (Android 5.0) or above
@@ -49,7 +47,7 @@ amplify push
 
 ## App Architecture and Folder Structure
 
-The code of the app implements clean architecture to separate the app layers with a feature-first approach for folder structure. I used [`Riverpod`](https://riverpod.dev/) for state management and [Freezed](https://pub.dev/packages/freezed) for the storage file model
+The code of the app implements clean architecture to separate the app layers with a feature-first approach for folder structure. I used [`Riverpod`](https://riverpod.dev/) for state management and [`Freezed`](https://pub.dev/packages/freezed) for the storage file model
 
 
 #### Folder Structure
@@ -75,4 +73,4 @@ lib
     * `services` is the app services layer
         *  `storage_service.dart` is the service & provider to use Amplify Storage for files listing & uploading
      * `models` is the storage_file model generated using Freezed
-     * `controller` is an abstract layer that used by the ui for the storage buisness logic
+     * `controller` is an abstract layer that used by the ui for the buisness logic
