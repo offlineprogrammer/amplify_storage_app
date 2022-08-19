@@ -12,7 +12,7 @@ This is a sample app that uses [`Amplify Storage`](https://docs.amplify.aws/lib/
 
 ## Getting Started
 * [`Install`](https://docs.amplify.aws/cli/start/install/) and configure Amplify CLI
-* A Flutter application targeting Flutter SDK >= 2.0.0 (stable version).
+* A Flutter application targeting Flutter SDK >= 2.10.0 (stable version).
 * An iOS configuration targeting at least iOS 11.0
 * An Android configuration targeting at least Android API level 21 (Android 5.0) or above
 
