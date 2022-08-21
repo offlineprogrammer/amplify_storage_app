@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:amplify_storage_app/features/storage_file/controller/storage_files_controller.dart';
 import 'package:amplify_storage_app/features/storage_file/models/storage_file.dart';
-import 'package:amplify_storage_app/features/storage_file/services/storage_service.dart';
+
 import 'package:amplify_storage_app/features/storage_file/ui/storage_files_list/delete_storage_file_dialog.dart';
 import 'package:amplify_storage_app/features/storage_file/ui/storage_files_list/storage_file_tile.dart';
 import 'package:amplify_storage_app/features/storage_file/ui/storage_files_list/upload_progress_dialog.dart';
@@ -32,7 +32,7 @@ class StorageFilesListPage extends ConsumerWidget {
         builder: (BuildContext context) {
           return const UploadProgressDialog();
         });
-    await ref.read(storageServiceProvider).uploadFile(file);
+    await ref.read(storageFilesControllerProvider).uploadFile(file);
     return true;
   }
 
@@ -46,7 +46,9 @@ class StorageFilesListPage extends ConsumerWidget {
     value ??= false;
 
     if (value) {
-      await ref.read(storageServiceProvider).deleteFile(storageFile.key);
+      await ref
+          .read(storageFilesControllerProvider)
+          .deleteFile(storageFile.key);
       ref.refresh(storageFilesListFutureProvider);
     }
   }
